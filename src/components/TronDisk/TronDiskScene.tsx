@@ -34,11 +34,16 @@ import DustParticles from "./DustParticles";
 
 interface TronDiskSceneProps {
   /**
-   * Filename of a 3D model in /public/models/ (e.g. "head.obj").
+   * Filename of a 3D head model in /public/models/ (e.g. "head.obj").
    * Supports .obj, .ply, .glb, .gltf formats.
    * If omitted, a sphere of particles is shown as a placeholder.
    */
   modelPath?: string;
+  /**
+   * Filename of a GLTF/GLB disk frame model in /public/models/ (e.g. "tron-disk.glb").
+   * If omitted, a procedural torus ring is rendered instead.
+   */
+  diskModelPath?: string;
   /** Number of particles for the head cloud */
   particleCount?: number;
   /** CSS class name for the container div */
@@ -53,8 +58,9 @@ interface TronDiskSceneProps {
  */
 function SceneContent({
   modelPath,
+  diskModelPath,
   particleCount,
-}: Pick<TronDiskSceneProps, "modelPath" | "particleCount">) {
+}: Pick<TronDiskSceneProps, "modelPath" | "diskModelPath" | "particleCount">) {
   return (
     <>
       {/*
@@ -76,7 +82,9 @@ function SceneContent({
       <fogExp2 attach="fog" args={["#000008", 0.08]} />
 
       {/* The glowing disk frame — rotates independently */}
-      <DiskFrame />
+      <Suspense fallback={null}>
+        <DiskFrame modelPath={diskModelPath} />
+      </Suspense>
 
       {/*
         The particle head — loads asynchronously if a model is provided.
@@ -142,6 +150,7 @@ function SceneContent({
 
 export default function TronDiskScene({
   modelPath,
+  diskModelPath,
   particleCount = 15000,
   className,
   style,
@@ -176,7 +185,7 @@ export default function TronDiskScene({
         }}
         dpr={[1, 2]}
       >
-        <SceneContent modelPath={modelPath} particleCount={particleCount} />
+        <SceneContent modelPath={modelPath} diskModelPath={diskModelPath} particleCount={particleCount} />
       </Canvas>
     </div>
   );

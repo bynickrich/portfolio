@@ -6,6 +6,7 @@ export default function Home() {
       <TronDiskScene
         // Uncomment and set to your scan filename once you have one:
         // modelPath="face.obj"
+        // diskModelPath="tron-disk.glb"
         particleCount={8000}
       />
     </main>
