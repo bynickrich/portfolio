@@ -106,9 +106,9 @@ function SceneContent({
           - mipmapBlur: uses mipmap chain for the blur (faster & better quality)
         */}
         <Bloom
-          luminanceThreshold={0.2}
-          luminanceSmoothing={0.9}
-          intensity={1.5}
+          luminanceThreshold={0.6}
+          luminanceSmoothing={0.4}
+          intensity={0.8}
           mipmapBlur
         />
 
@@ -167,7 +167,7 @@ export default function TronDiskScene({
           but don't go below 1x". Higher = sharper but more GPU work.
       */}
       <Canvas
-        camera={{ position: [0, 0, 5], fov: 50 }}
+        camera={{ position: [0, 0, 6], fov: 45 }}
         gl={{
           antialias: true,
           toneMapping: THREE.ACESFilmicToneMapping,

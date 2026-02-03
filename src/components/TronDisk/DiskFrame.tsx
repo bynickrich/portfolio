@@ -46,15 +46,12 @@ export default function DiskFrame({
       {/*
         Outer Glow Ring — the bright cyan/white edge visible in the Tron reference.
         A torus (donut) provides a round tube cross-section which catches bloom nicely.
+        We use MeshBasicMaterial (unlit) so the ring glows on its own.
+        The color is kept moderate — bloom post-processing adds the halo.
       */}
       <mesh>
         <torusGeometry args={[radius, 0.04, 16, 100]} />
-        <meshBasicMaterial
-          color={glowColor}
-          toneMapped={false}
-          // toneMapped=false lets the color exceed 0-1 range, making it
-          // appear extra bright and bloom-friendly in post-processing.
-        />
+        <meshBasicMaterial color={glowColor} />
       </mesh>
 
       {/* Inner edge ring — slightly smaller, slightly dimmer */}
@@ -62,8 +59,7 @@ export default function DiskFrame({
         <torusGeometry args={[radius * 0.85, 0.02, 16, 100]} />
         <meshBasicMaterial
           color={glowColor}
-          toneMapped={false}
-          opacity={0.5}
+          opacity={0.4}
           transparent
         />
       </mesh>
@@ -107,8 +103,7 @@ export default function DiskFrame({
         <torusGeometry args={[radius * 0.92, 0.008, 8, 100]} />
         <meshBasicMaterial
           color={glowColor}
-          toneMapped={false}
-          opacity={0.3}
+          opacity={0.25}
           transparent
         />
       </mesh>
