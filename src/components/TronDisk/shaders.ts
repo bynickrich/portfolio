@@ -53,13 +53,14 @@ export const headParticleVertex = /* glsl */ `
 
     // Size attenuation: particles farther from the camera appear smaller,
     // mimicking perspective. The divisor (-mvPosition.z) is the depth.
-    gl_PointSize = uPointSize * (300.0 / -mvPosition.z);
+    gl_PointSize = uPointSize * (150.0 / -mvPosition.z);
 
     gl_Position = projectionMatrix * mvPosition;
 
     // Vary opacity per particle for visual richness.
-    // Mix between 0.4 and 1.0 based on each particle's random seed.
-    vAlpha = mix(0.4, 1.0, aRandom);
+    // Keep the range low — with additive blending, overlapping particles
+    // compound brightness, so individual particles must be dim.
+    vAlpha = mix(0.15, 0.6, aRandom);
   }
 `;
 
@@ -85,9 +86,9 @@ export const headParticleFragment = /* glsl */ `
     alpha *= vAlpha;
 
     // Slight color variation: core is brighter/whiter, edges are more cyan
-    vec3 color = mix(uColor, vec3(1.0), alpha * 0.3);
+    vec3 color = mix(uColor, vec3(1.0), alpha * 0.15);
 
-    gl_FragColor = vec4(color, alpha * 0.85);
+    gl_FragColor = vec4(color, alpha * 0.45);
   }
 `;
 

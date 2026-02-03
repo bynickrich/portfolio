@@ -80,13 +80,12 @@ function generateFallbackSphere(count: number): Float32Array {
   const positions = new Float32Array(count * 3);
 
   for (let i = 0; i < count; i++) {
-    // Fibonacci sphere algorithm — distributes points evenly on a sphere surface.
-    // Much better than random distribution which clumps at poles.
-    const phi = Math.acos(1 - (2 * (i + 0.5)) / count);
-    const theta = Math.PI * (1 + Math.sqrt(5)) * i;
-
-    // Vary the radius slightly so it's not a perfect shell
-    const r = 1.2 + (Math.random() - 0.5) * 0.3;
+    // Random spherical coordinates with volumetric distribution.
+    // Using cube-root of random radius so particles fill the volume
+    // evenly instead of clumping at the center (uniform sphere sampling).
+    const theta = Math.random() * Math.PI * 2;
+    const phi = Math.acos(2 * Math.random() - 1);
+    const r = Math.cbrt(Math.random()) * 1.3;
 
     positions[i * 3] = r * Math.sin(phi) * Math.cos(theta);
     positions[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
@@ -260,7 +259,7 @@ export default function ParticleHead({
       uTime: { value: 0 },
       uNoiseScale: { value: noiseScale },
       uNoiseSpeed: { value: 0.8 },
-      uPointSize: { value: 2.5 },
+      uPointSize: { value: 1.5 },
       uColor: { value: new THREE.Color(color) },
     }),
     // We intentionally don't re-create on color/noise changes;

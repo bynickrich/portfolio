@@ -106,10 +106,11 @@ function SceneContent({
           - mipmapBlur: uses mipmap chain for the blur (faster & better quality)
         */}
         <Bloom
-          luminanceThreshold={0.6}
-          luminanceSmoothing={0.4}
-          intensity={0.8}
+          luminanceThreshold={0.8}
+          luminanceSmoothing={0.3}
+          intensity={0.6}
           mipmapBlur
+          radius={0.6}
         />
 
         {/*

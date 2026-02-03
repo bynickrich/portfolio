@@ -6,7 +6,7 @@ export default function Home() {
       <TronDiskScene
         // Uncomment and set to your scan filename once you have one:
         // modelPath="face.obj"
-        particleCount={15000}
+        particleCount={8000}
       />
     </main>
   );
